@@ -17,3 +17,23 @@ export type ModelDetailPageProps = {
         id: string
     }>
 }
+
+export type CategoryDetailPageProps = {
+    params: Promise<{
+        categoryName: string
+    }>
+}
+
+export type ModelsGridProps = {
+    title: string
+    models: Model[]
+}
+
+export type Category = {
+    displayName: string
+    slug: string
+}
+
+export type CategoriesData = {
+    categories: Category[]
+}
