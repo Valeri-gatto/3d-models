@@ -1,5 +1,5 @@
 import { getAllModels } from "@/app/lib/models";
-import ModelCard from "./card";
+import ModelCard from "../components/card";
 import { Model } from "../types";
 
 export default async function ModelsPage() {

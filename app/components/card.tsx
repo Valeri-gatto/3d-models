@@ -22,7 +22,7 @@ export default function ModelCard({ model }: { model: Model }) {
                         <div className="flex items-center gap-1 mt-2"
                             aria-label={`${model.likes}`}
                         >
-                            <Image src={like} alt="like" />
+                            <Image aria-hidden="true" src={like} alt="like" />
                             <span className="text-gray-400">{model.likes}</span>
                         </div>
                     </div>
