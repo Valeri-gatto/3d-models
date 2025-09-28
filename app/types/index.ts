@@ -37,3 +37,9 @@ export type Category = {
 export type CategoriesData = {
     categories: Category[]
 }
+
+export type NavLinkProps = {
+    href: string,
+    children: React.ReactNode,
+    isActive: boolean,
+}
