@@ -1,6 +1,5 @@
 import "./globals.css";
 import { albert, montserrat } from "./fonts";
-
 import { RootLayoutProps } from "./types";
 import NavBar from "./components/NavBar";
 

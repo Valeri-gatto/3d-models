@@ -1,13 +1,13 @@
 import ModelsGrid from "@/app/components/ModelsGrid";
 import { getCategoryBySlug, getDisplayNameFromSlug } from "@/app/lib/categories";
-import { getAllModels } from "@/app/lib/models";
+import { getModels } from "@/app/lib/models";
 import { CategoryDetailPageProps } from "@/app/types";
 
 export default async function CategoryPage({ params }: CategoryDetailPageProps) {
     const { categoryName } = await params;
-    const slug = getCategoryBySlug(categoryName).slug;
-    const name = getDisplayNameFromSlug(slug);
-    const models = (await getAllModels()).filter(model => model.category === slug);
+    const category = getCategoryBySlug(categoryName);
+    const models = await getModels({ category: categoryName });
+    const name = getDisplayNameFromSlug(category.slug);
 
     if (!models) {
         return <p>This category doesn&apos;t exsist</p>

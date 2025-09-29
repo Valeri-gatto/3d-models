@@ -18,8 +18,8 @@ export default function NavBar() {
                     <Image className="block md:hidden w-[40px] h-auto" src={logoMobile} alt="logo" />
                 </Link>
                 <ul className="flex items-center gap-5">
-                    <NavLink href={'/3d-models'} isActive={pathname === '/3d-models'}>3d models</NavLink>
-                    <NavLink href={'/about'} isActive={pathname === '/about'}>About</NavLink>
+                    <NavLink href={'/3d-models'} isActive={pathname.startsWith('/3d-models')}>3d models</NavLink>
+                    <NavLink href={'/about'} isActive={pathname.startsWith('/about')}>About</NavLink>
                 </ul>
             </nav>
         </header >
