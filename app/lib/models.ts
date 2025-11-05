@@ -1,10 +1,9 @@
-import modelsData from "../data/models.json"
-import { GetModelsParams, Model } from "../types";
+import modelsData from "@/app/data/models.json";
+import { GetModelsParams, Model } from "@/app/types";
 
 export async function getModels({ category }: GetModelsParams = {}) {
-    // This is where you'd write code to fetch the list
-    // of models from a database. We're mocking that with
-    // our JSON array of data in models.json for now.
+    // There is a place for fetch the list of models from a database. 
+    // I use a JSON array of data in models.json for now.
     let filteredModels = [...modelsData];
     if (category) {
         filteredModels = modelsData.filter(model => model.category === category);

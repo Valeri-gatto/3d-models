@@ -1,13 +1,13 @@
 import Image from "next/image";
-import type { Model } from "../types";
-import like from "@/public/Heart.svg";
 import Link from "next/link";
+import type { Model } from "@/app/types";
+import like from "@/public/like.svg";
 import placeholderImg from "@/public/hero-img.png"
 
 export default function ModelCard({ model }: { model: Model }) {
     return (
         <Link href={`/3d-models/${model.id}`}
-            className="block group hover:shadow-xl hover:-translate-y-[3px] transition-all"
+            className="block group hover:shadow-lg hover:-translate-y-[3px] transition-all"
             aria-labelledby={`model-${model.id}-title`}
         >
             <article className="overflow-hidden flex flex-col outline outline-gray-400 rounded-lg h-full">

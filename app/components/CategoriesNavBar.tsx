@@ -1,8 +1,8 @@
 'use client'
 
-import { getAllCategories } from "../lib/categories";
-import NavLink from "../components/NavLink";
 import { usePathname } from "next/navigation";
+import { getAllCategories } from "@/app/lib/categories";
+import NavLink from "@/app/components/NavLink";
 
 export default function CategoriesNavBar() {
     const categories = getAllCategories();

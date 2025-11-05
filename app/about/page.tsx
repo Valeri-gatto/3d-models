@@ -1,13 +1,13 @@
-import Image from "next/image"
-import createsImg from '@/public/hero-img.png'
-import flag from '@/public/flag.svg'
-import globe from '@/public/globe.svg'
-import stack from '@/public/stack.svg'
-import watermark from '@/public/watermark.svg'
+import Image from "next/image";
+import createsImg from "@/public/hero-img.png";
+import flag from "@/public/flag.svg";
+import globe from "@/public/globe.svg";
+import stack from "@/public/stack.svg";
+import watermark from "@/public/watermark.svg";
 
 export default function AboutPage() {
     return (
-        <main className="flex flex-col gap-7 container text-xl px-4 py-8 mx-auto max-w-6xl md:gap-10">
+        <main className="flex flex-col gap-7 container text-xl p-8 mx-auto max-w-6xl md:gap-10">
             <section className="flex flex-1 flex-col md:flex-row gap-6 md:gap-20">
                 <Image className="rounded-md object-cover" src={createsImg} alt="creates" />
                 <div className="flex flex-col justify-between items-start gap-7">

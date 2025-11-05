@@ -1,9 +1,9 @@
+import Image from "next/image";
+import Link from "next/link";
+import like from "@/public/like.svg";
 import { getModelById } from "@/app/lib/models";
 import { ModelDetailPageProps } from "@/app/types";
-import Image from "next/image";
 import placeholderImg from "@/public/hero-img.png";
-import like from "@/public/Heart.svg";
-import Link from "next/link";
 
 export default async function Model({ params }: ModelDetailPageProps) {
     const { id } = await params;
@@ -13,7 +13,7 @@ export default async function Model({ params }: ModelDetailPageProps) {
         <div className="container max-w-6xl mx-auto px-4 py-8">
             <article className="flex flex-col lg:flex-row gap-8">
                 <Link href={'/3d-models'} className="text-center uppercase block md:hidden">Back to overview</Link>
-                <Image className="aspect-square inset-0 object-cover w-full shadow-lg rounded-lg" src={placeholderImg} alt="model" />
+                <Image className="aspect-square inset-0 object-cover basis-[45%] shadow-lg rounded-lg" src={placeholderImg} alt="model" />
                 <section className="flex flex-col justify-center place-self-center h-full">
                     <div className="flex flex-col gap-5">
                         <div className="flex items-center gap-1 mt-2 text-gray-400 text-2xl"

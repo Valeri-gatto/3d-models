@@ -3,13 +3,13 @@ export type RootLayoutProps = Readonly<{
 }>
 
 export type Model = {
-    id: number
-    name: string
-    description: string
-    likes: number
-    image: string
-    category: string
-    dateAdded: string
+    id: number,
+    name: string,
+    description: string,
+    likes: number,
+    image: string,
+    category: string,
+    dateAdded: string,
 }
 
 export type ModelDetailPageProps = {
@@ -25,13 +25,14 @@ export type CategoryDetailPageProps = {
 }
 
 export type ModelsGridProps = {
-    title: string
-    models: Model[]
+    title: string,
+    models: Model[],
+    noMatches?: boolean,
 }
 
 export type Category = {
-    displayName: string
-    slug: string
+    displayName: string,
+    slug: string,
 }
 
 export type CategoriesData = {
@@ -49,7 +50,7 @@ export type GetModelsParams = {
 }
 
 export type ModelsPageProps = {
-    searchParams: {
-        q?: string
-    }
+    searchParams: Promise<{
+        [key in string]: string
+    }>
 }

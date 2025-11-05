@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import logo from "@/public/Logo.svg";
-import logoMobile from "@/public/logo_mobile.svg";
-import NavLink from "./NavLink";
 import { usePathname } from "next/navigation";
+import logo from "@/public/logo.svg";
+import logoMobile from "@/public/logo_mobile.svg";
+import NavLink from "@/app/components/NavLink";
 
 export default function NavBar() {
     const pathname = usePathname();

@@ -1,7 +1,7 @@
-import "./globals.css";
-import { albert, montserrat } from "./fonts";
-import { RootLayoutProps } from "./types";
-import NavBar from "./components/NavBar";
+import "@/app/globals.css";
+import { albert, montserrat } from "@/app/fonts";
+import { RootLayoutProps } from "@/app/types";
+import NavBar from "@/app/components/NavBar";
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (

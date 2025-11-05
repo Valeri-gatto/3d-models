@@ -1,11 +1,11 @@
 import Image from "next/image";
-import cutHero from '@/public/cut-hero-img.png'
 import Link from "next/link";
+import cutHero from "@/public/cut-hero-img.png";
 
 export default function Home() {
   return (
     <main>
-      <section className="flex flex-col md:flex-row justify-between items-center gap-8 px-6 py-12 mx-auto max-w-7xl">
+      <section className="flex flex-col md:flex-row justify-between items-center gap-8 px-6 py-8 mx-auto max-w-7xl">
         <div className="flex-1 space-y-6">
           <p className="hidden uppercase text-base md:block">Your go-to platform for 3D printing files</p>
           <h1 className="text-4xl md:text-5xl leading-none">Discover what’s possible with 3D printing</h1>
@@ -14,7 +14,7 @@ export default function Home() {
             <Link href="/3d-models" className="font-semibold uppercase text-xl border-2 p-3 transition duration-100 bg-white text-black hover:bg-black hover:text-white">Browse models</Link>
           </div>
         </div>
-        <Image src={cutHero} alt="creatures" />
+        <Image className="w-4/5 sm:w-3/5 md:w-3/7" src={cutHero} alt="creatures" />
       </section>
     </main>
   )
