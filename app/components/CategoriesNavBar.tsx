@@ -1,11 +1,10 @@
 'use client'
 
 import { usePathname } from "next/navigation";
-import { getAllCategories } from "@/app/lib/categories";
 import NavLink from "@/app/components/NavLink";
+import { CategoriesNavBarProps } from "@/app/types";
 
-export default function CategoriesNavBar() {
-    const categories = getAllCategories();
+export default function CategoriesNavBar({ categories }: CategoriesNavBarProps) {
     const pathname = usePathname();
 
     return (
@@ -14,8 +13,8 @@ export default function CategoriesNavBar() {
                 <nav className="w-full overflow-x-auto md:overflow-visible scrollbar-hide">
                     <ul className="flex flex-row md:flex-col whitespace-nowrap px-4 py-3 space-x-4 md:p-0 md:space-x-0 md:space-y-3">
                         <NavLink href="/3d-models" isActive={pathname === '/3d-models'}>All</NavLink>
-                        {categories.map((c, idx) => {
-                            return <NavLink key={idx} href={`/3d-models/category/${c.slug}`} isActive={pathname === `/3d-models/category/${c.slug}`}>
+                        {categories.map((c) => {
+                            return <NavLink key={c.id} href={`/3d-models/category/${c.slug}`} isActive={pathname === `/3d-models/category/${c.slug}`}>
                                 {c.displayName}
                             </NavLink>
                         })}

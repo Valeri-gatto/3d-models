@@ -18,7 +18,7 @@ export default function ModelCard({ model }: { model: Model }) {
                         <p>{model.description}</p>
                     </div>
                     <div className="flex flex-col gap-2">
-                        <span className="place-self-start outline outline-gray-400 rounded-full px-3 py-1">{model.category}</span>
+                        <span className="place-self-start outline outline-gray-400 rounded-full px-3 py-1">{model.slug}</span>
                         <div className="flex items-center gap-1 mt-2"
                             aria-label={`${model.likes}`}
                         >

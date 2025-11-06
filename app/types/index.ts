@@ -6,9 +6,9 @@ export type Model = {
     id: number,
     name: string,
     description: string,
+    image: string | null,
     likes: number,
-    image: string,
-    category: string,
+    slug: string,
     dateAdded: string,
 }
 
@@ -16,6 +16,10 @@ export type ModelDetailPageProps = {
     params: Promise<{
         id: string
     }>
+}
+
+export type CategoriesNavBarProps = {
+    categories: Category[]
 }
 
 export type CategoryDetailPageProps = {
@@ -33,6 +37,7 @@ export type ModelsGridProps = {
 export type Category = {
     displayName: string,
     slug: string,
+    id: number,
 }
 
 export type CategoriesData = {
@@ -43,10 +48,6 @@ export type NavLinkProps = {
     href: string,
     children: React.ReactNode,
     isActive: boolean,
-}
-
-export type GetModelsParams = {
-    category?: string
 }
 
 export type ModelsPageProps = {

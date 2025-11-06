@@ -4,7 +4,7 @@ import ModelsGrid from "@/app/components/ModelsGrid";
 import SearchInput from "../components/SearchInput";
 
 export default async function ModelsPage({ searchParams }: ModelsPageProps) {
-    const data = await getModels();
+    const data = getModels();
     const search = (await searchParams)?.search?.toLowerCase() || "";
     const filteredData = search ? data.filter(model => model.name.toLowerCase().includes(search) || model.description.toLowerCase().includes(search)) : data;
 

@@ -1,20 +1,20 @@
-import modelsData from "@/app/data/models.json";
-import { GetModelsParams, Model } from "@/app/types";
+import { notFound } from "next/navigation";
+import { Model } from "@/app/types";
+import { getDB } from "@/app/lib/db";
 
-export async function getModels({ category }: GetModelsParams = {}) {
-    // There is a place for fetch the list of models from a database. 
-    // I use a JSON array of data in models.json for now.
-    let filteredModels = [...modelsData];
-    if (category) {
-        filteredModels = modelsData.filter(model => model.category === category);
+export function getModels(categoryId?: number) {
+    if (categoryId) {
+        return getDB().prepare<[number], Model>('SELECT models.id, models.name, models.description, models.image, models.date_added, categories.slug, (SELECT count(user_id) FROM likes WHERE likes.model_id=models.id) AS likes FROM models JOIN categories ON models.category=categories.id WHERE categories.id=?').all(categoryId);
+    } else {
+        return getDB().prepare<[], Model>('SELECT models.id, models.name, models.description, models.image, models.date_added, categories.slug, (SELECT count(user_id) FROM likes WHERE likes.model_id=models.id) AS likes FROM models JOIN categories ON models.category=categories.id').all();
     }
-    return filteredModels;
 }
 
-export async function getModelById(id: string | number): Promise<Model> {
-    const foundModel = modelsData.find((model: Model) => model.id.toString() === id.toString())
+export function getModelById(id: string | number): Model {
+    const foundModel = getDB().prepare<[string | number], Model>('SELECT models.id, models.name, models.description, models.image, models.date_added, categories.slug, (SELECT count(user_id) FROM likes WHERE likes.model_id=models.id) AS likes FROM models JOIN categories ON models.category=categories.id WHERE models.id=?').get(id);
     if (!foundModel) {
-        throw new Error(`Model with id ${id} not found`)
+        notFound()
     }
     return foundModel
 }
+

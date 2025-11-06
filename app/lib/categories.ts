@@ -1,20 +1,15 @@
-import categories from "@/app/data/categories.json";
+import { notFound } from "next/navigation";
 import { Category } from "@/app/types";
-
+import { getDB } from "@/app/lib/db";
 
 export function getAllCategories(): Category[] {
-    return categories;
+    return getDB().prepare<[], Category>('SELECT * FROM categories').all();
 }
 
 export function getCategoryBySlug(slug: string): Category {
-    const category = categories.find((c: Category) => c.slug === slug)
+    const category = getDB().prepare<[string], Category>('SELECT * FROM categories WHERE slug=?').get(slug);
     if (!category) {
-        throw new Error(`Category with slug ${slug} not found`)
+        notFound()
     }
     return category
-}
-
-export function getDisplayNameFromSlug(slug: string): string {
-    const category = getCategoryBySlug(slug);
-    return category.displayName;
 }

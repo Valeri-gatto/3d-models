@@ -7,7 +7,7 @@ import placeholderImg from "@/public/hero-img.png";
 
 export default async function Model({ params }: ModelDetailPageProps) {
     const { id } = await params;
-    const model = await getModelById(id);
+    const model = getModelById(id);
 
     return (
         <div className="container max-w-6xl mx-auto px-4 py-8">
@@ -29,7 +29,7 @@ export default async function Model({ params }: ModelDetailPageProps) {
                         <span className="place-self-start outline outline-gray-400 rounded-full px-3 py-1"
                             role="status"
                             aria-label="category"
-                        >{model.category}</span>
+                        >{model.slug}</span>
                         <p className="prose prose-lg max-w-none text-2xl leading-relaxed">{model.description}</p>
                     </div>
 
