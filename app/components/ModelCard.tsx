@@ -1,10 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Model } from "@/app/types";
-import like from "@/public/like.svg";
 import placeholderImg from "@/public/hero-img.png"
+import { getUserId } from "@/app/lib/user";
+import Like from "@/app/components/Like";
 
-export default function ModelCard({ model }: { model: Model }) {
+
+export default async function ModelCard({ model }: { model: Model }) {
+    const user_id = await getUserId();
+
     return (
         <Link href={`/3d-models/${model.id}`}
             className="block group hover:shadow-lg hover:-translate-y-[3px] transition-all"
@@ -19,12 +23,7 @@ export default function ModelCard({ model }: { model: Model }) {
                     </div>
                     <div className="flex flex-col gap-2">
                         <span className="place-self-start outline outline-gray-400 rounded-full px-3 py-1">{model.slug}</span>
-                        <div className="flex items-center gap-1 mt-2"
-                            aria-label={`${model.likes}`}
-                        >
-                            <Image aria-hidden="true" src={like} alt="like" />
-                            <span className="text-gray-400">{model.likes}</span>
-                        </div>
+                        <Like count={model.likes} user_id={user_id} model_id={model.id} liked={model.isLiked > 0} />
                     </div>
                 </div>
             </article>

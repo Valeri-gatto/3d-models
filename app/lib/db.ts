@@ -1,5 +1,5 @@
 import Database from 'better-sqlite3';
-import { unlink } from 'fs';
+import { unlink } from 'node:fs';
 import categories from "@/app/data/categories.json";
 import modelsData from "@/app/data/models.json";
 import { randomBytes } from 'crypto';
@@ -7,23 +7,20 @@ import { randomBytes } from 'crypto';
 const tables = new Set(["categories", "sessions", "models", "likes"]);
 const dbPath = 'db.sqlite';
 
-export function getDB() {
-    return new Database(dbPath);
-}
-let db = getDB();
+export let db = new Database(dbPath);
+
 const allTables = db.prepare<[], { name: string }>("SELECT name FROM sqlite_master WHERE type='table'").all();
 const allTablesExist = new Set(allTables.map(t => t.name)).symmetricDifference(tables).size === 0;
 if (!allTablesExist) {
     db.close();
     unlink(dbPath, (err) => {
         console.log(err)
-
     })
     db = new Database(dbPath);
     db.pragma('journal_mode = WAL');
     db.exec(`
-CREATE TABLE sessions (id INTEGER PRIMARY KEY, session_id BLOB NOT NULL) STRICT;
-CREATE UNIQUE INDEX sessions_id ON sessions(session_id);
+CREATE TABLE sessions (id INTEGER PRIMARY KEY, session_token BLOB NOT NULL) STRICT;
+CREATE UNIQUE INDEX sessions_id ON sessions(session_token);
 
 CREATE TABLE categories (id INTEGER PRIMARY KEY, displayName TEXT NOT NULL, slug TEXT NOT NULL) STRICT;
 CREATE UNIQUE INDEX categories_slug ON categories(slug);
@@ -32,6 +29,8 @@ CREATE TABLE models (id INTEGER PRIMARY KEY, name TEXT NOT NULL, description TEX
 
 CREATE TABLE likes (user_id INTEGER, model_id INTEGER, FOREIGN KEY(user_id) REFERENCES sessions(id), FOREIGN KEY(model_id) REFERENCES models(id)) STRICT;
 CREATE INDEX likes_models_id ON likes(model_id);
+CREATE UNIQUE INDEX likes_model_plus_user_unique ON likes(user_id, model_id);
+
         `);
     const insertCats = db.prepare('INSERT INTO categories (displayName, slug) VALUES (@displayName, @slug);');
     for (const obj of categories) {
@@ -44,7 +43,7 @@ CREATE INDEX likes_models_id ON likes(model_id);
     }
 
     const maxLikes = Math.max(...modelsData.map(mod => mod.likes));
-    const insertSessions = db.prepare('INSERT INTO sessions (session_id) VALUES (?);');
+    const insertSessions = db.prepare('INSERT INTO sessions (session_token) VALUES (?);');
     for (let i = 0; i < maxLikes; i++) {
         insertSessions.run(randomBytes(16))
     }
@@ -56,4 +55,6 @@ CREATE INDEX likes_models_id ON likes(model_id);
             insertLikes.run(j + 1, i + 1)
         }
     }
+
+    console.log("Initial data added")
 }
