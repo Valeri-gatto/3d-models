@@ -2,6 +2,14 @@ import { NextRequest, NextResponse, ProxyConfig } from "next/server";
 import { getDB } from "@/app/lib/db";
 import { Sessions } from "@/app/types";
 import { randomBytes } from "crypto";
+import { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
+
+const CookieParams: Partial<ResponseCookie> = {
+    path: "/",
+    maxAge: 365 * 24 * 60 * 60,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+};
 
 export async function proxy(request: NextRequest): Promise<NextResponse> {
     const sessionIdFromCookies = request.cookies.get("session_token")?.value;
@@ -33,7 +41,7 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
             headers: newRequestHeaders,
         }
     });
-    resp.cookies.set("session_token", newCookieString);
+    resp.cookies.set("session_token", newCookieString, CookieParams);
     return resp;
 }
 
