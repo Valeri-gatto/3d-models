@@ -1,22 +1,26 @@
 import Database from 'better-sqlite3';
-import { unlink } from 'node:fs';
 import categories from "@/app/data/categories.json";
 import modelsData from "@/app/data/models.json";
 import { randomBytes } from 'crypto';
 
-const tables = new Set(["categories", "sessions", "models", "likes"]);
-const dbPath = 'db.sqlite';
+const dbPath = process.env?.DATABASE_PATH || 'db.sqlite';
 
-export let db = new Database(dbPath);
+let db: Database.Database | undefined = undefined;
 
-const allTables = db.prepare<[], { name: string }>("SELECT name FROM sqlite_master WHERE type='table'").all();
-const allTablesExist = new Set(allTables.map(t => t.name)).symmetricDifference(tables).size === 0;
-if (!allTablesExist) {
-    db.close();
-    unlink(dbPath, (err) => {
-        console.log(err)
-    })
-    db = new Database(dbPath);
+export function getDB() {
+    if (!db) {
+        db = new Database(dbPath);
+        const tables = new Set(["categories", "sessions", "models", "likes"]);
+        const allTables = db.prepare<[], { name: string }>("SELECT name FROM sqlite_master WHERE type='table'").all();
+        const allTablesExist = new Set(allTables.map(t => t.name)).symmetricDifference(tables).size === 0;
+        if (!allTablesExist) {
+            createDBWithInitialData(db);
+        }
+    }
+    return db
+}
+
+function createDBWithInitialData(db: Database.Database) {
     db.pragma('journal_mode = WAL');
     db.exec(`
 CREATE TABLE sessions (id INTEGER PRIMARY KEY, session_token BLOB NOT NULL) STRICT;

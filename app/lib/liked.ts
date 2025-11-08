@@ -1,7 +1,9 @@
 'use server'
-import { db } from "@/app/lib/db";
+import { getDB } from "@/app/lib/db";
 
 export async function setLikedInDB(user_id: number, model_id: number, liked: boolean) {
+    const db = getDB();
+
     if (!liked) {
         db.prepare<[number, number], [number]>('DELETE FROM likes WHERE user_id=? AND model_id=?;').run(user_id, model_id)
     } else {

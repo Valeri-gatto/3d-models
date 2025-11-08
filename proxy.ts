@@ -1,10 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
-import { db } from "@/app/lib/db";
+import { NextRequest, NextResponse, ProxyConfig } from "next/server";
+import { getDB } from "@/app/lib/db";
 import { Sessions } from "@/app/types";
 import { randomBytes } from "crypto";
 
 export async function proxy(request: NextRequest): Promise<NextResponse> {
     const sessionIdFromCookies = request.cookies.get("session_token")?.value;
+    const db = getDB();
 
     if (sessionIdFromCookies) {
         const findSessionFromDB = db.prepare<Buffer<ArrayBuffer>, Sessions>('SELECT * FROM sessions WHERE session_token=?').get(
@@ -36,6 +37,6 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
     return resp;
 }
 
-// export const config: ProxyConfig = {
-//     matcher: ["/((?!api|_next|images|static).*)", "/"]
-// };
+export const config: ProxyConfig = {
+    matcher: ["/((?!images|static).*)", "/"]
+};

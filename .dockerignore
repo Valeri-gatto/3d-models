@@ -1,0 +1,9 @@
+Dockerfile
+.dockerignore
+node_modules
+.next
+.git
+.gitignore
+.vscode
+docker-compose.yml
+db.sqlite*
